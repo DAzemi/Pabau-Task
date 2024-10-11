@@ -2,32 +2,148 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Light blue theme with subtle animation */
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-start-rgb: 173, 216, 230; /* Light Blue */
+  --background-end-rgb: 240, 248, 255;   /* AliceBlue */
+  --accent-color: 0, 122, 204;           /* A vibrant blue for accent */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background-start-rgb: 25, 25, 112; /* Midnight Blue */
+    --background-end-rgb: 0, 0, 139;     /* Dark Blue */
+    --accent-color: 30, 144, 255;        /* DodgerBlue */
   }
 }
 
+/* Body background with a smooth gradient and animated waves */
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    ) rgb(var(--background-start-rgb));
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  background-size: cover;
+  position: relative;
+  overflow-x: hidden;
 }
 
+/* Creative background animation - subtle gradient waves */
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(173,216,230,0.5) 10%, rgba(240,248,255,0) 60%);
+  animation: moveWaves 8s infinite ease-in-out alternate;
+  pointer-events: none; /* Don't interfere with user interactions */
+}
+
+/* Keyframes for the moving wave animation */
+@keyframes moveWaves {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50px);
+  }
+}
+
+/* Accent-colored buttons with hover animation */
+button {
+  background-color: rgb(var(--accent-color));
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: rgba(var(--accent-color), 0.8);
+  transform: translateY(-3px);
+  box-shadow: 0px 4px 12px rgba(0, 122, 204, 0.3);
+}
+
+/* Add smooth transitions to all links */
+a {
+  color: rgb(var(--accent-color));
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: rgba(var(--accent-color), 0.7);
+  text-decoration: underline;
+}
+
+/* Animate text appearance */
+h1, h2, h3, p {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 1s forwards;
+}
+
+h1 {
+  animation-delay: 0.3s;
+}
+
+h2 {
+  animation-delay: 0.5s;
+}
+
+p {
+  animation-delay: 0.7s;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom utility classes */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .fade-in {
+    animation: fadeIn 1s ease forwards;
+  }
+
+  .accent-bg {
+    background-color: rgb(var(--accent-color));
+  }
+
+  .accent-border {
+    border: 2px solid rgb(var(--accent-color));
+  }
+
+  .pulse {
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
 }
